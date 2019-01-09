@@ -1,10 +1,14 @@
 package telran.m2m.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 
 /**
  * Data Transfer Object for the Room in the monitoring and control system for buildings
  * made for generation of imitation model to test the functionality of microservices project
+ *
  * @author Andrey Lavrinenko
  */
 public class Room {
@@ -92,21 +96,6 @@ public class Room {
     private double CO2PercentOfVolume;
 
     /**
-     * Minimum room temperature in degrees Celsius based on customer's requirements,
-     * usually meant in conditions without people and animals,
-     * e.g. should be higher than 10 degrees Celsius for rooms with water heating
-     */
-    private double minRoomTemperatureC;
-
-    /**
-     * Maximum room temperature in degrees Celsius based on customer's requirements,
-     * usually meant in conditions without people and animals,
-     * e.g. should be lower than 40 degrees Celsius for rooms when people and animals
-     * can come in the nearest feature
-     */
-    private double maxRoomTemperatureC;
-
-    /**
      * Boolean flag determining if smoke is presented in the room
      */
     private boolean isSmoke;
@@ -116,7 +105,25 @@ public class Room {
      */
     private boolean isAlarm;
 
-    public Room(int idRoom, String nameRoom, double volumeRoomM3, ArrayList<Window> windows, ArrayList<Heater> heaters, ArrayList<Cooler> coolers, ArrayList<Light> lights, int persons, int animals, AirConditioner airConditoner, double internalTemperatureC, double outsideTemperatureC, double lightLumen, double electricityKwtPerHour, double oxygenPercentOfVolume, double CO2PercentOfVolume, double minRoomTemperatureC, double maxRoomTemperatureC, boolean isSmoke, boolean isAlarm) {
+    @JsonCreator
+    public Room(@JsonProperty("idRoom") int idRoom,
+                @JsonProperty("nameRoom") String nameRoom,
+                @JsonProperty("volumeRoomM3") double volumeRoomM3,
+                @JsonProperty("windows") ArrayList<Window> windows,
+                @JsonProperty("heaters") ArrayList<Heater> heaters,
+                @JsonProperty("coolers") ArrayList<Cooler> coolers,
+                @JsonProperty("lights") ArrayList<Light> lights,
+                @JsonProperty("persons") int persons,
+                @JsonProperty("animals") int animals,
+                @JsonProperty("airConditioner") AirConditioner airConditioner,
+                @JsonProperty("internalTemperatureC") double internalTemperatureC,
+                @JsonProperty("outsideTemperatureC") double outsideTemperatureC,
+                @JsonProperty("lightLumen") double lightLumen,
+                @JsonProperty("electricityKwtPerHour") double electricityKwtPerHour,
+                @JsonProperty("oxygenPercentOfVolume") double oxygenPercentOfVolume,
+                @JsonProperty("CO2PercentOfVolume") double CO2PercentOfVolume,
+                @JsonProperty("isSmoke") boolean isSmoke,
+                @JsonProperty("isAlarm") boolean isAlarm) {
         this.idRoom = idRoom;
         this.nameRoom = nameRoom;
         this.volumeRoomM3 = volumeRoomM3;
@@ -126,21 +133,21 @@ public class Room {
         this.lights = lights;
         this.persons = persons;
         this.animals = animals;
-        this.airConditioner = airConditoner;
+        this.airConditioner = airConditioner;
         this.internalTemperatureC = internalTemperatureC;
         this.outsideTemperatureC = outsideTemperatureC;
         this.lightLumen = lightLumen;
         this.electricityKwtPerHour = electricityKwtPerHour;
         this.oxygenPercentOfVolume = oxygenPercentOfVolume;
         this.CO2PercentOfVolume = CO2PercentOfVolume;
-        this.minRoomTemperatureC = minRoomTemperatureC;
-        this.maxRoomTemperatureC = maxRoomTemperatureC;
         this.isSmoke = isSmoke;
         this.isAlarm = isAlarm;
     }
 
-    public Room() {
-    }
+//    public Room(int newRoomId, String newRoomName, double newVolumeRoomM3,
+////                ArrayList<Window> newRoomWindows, ArrayList<Heater> newRoomHeaters, ArrayList<Cooler> newRoomCoolers, ArrayList<Light> newRoomLights,
+//                int newRoomPersons, int newRoomAnimals, AirConditioner newRoomAirConditioner, double newRoomInternalTemperatureC, double newRoomOutsideTemperatureC, double newRoomElectricityKwtPerHour, double newRoomOxygenPercentOfVolume, double newRoomCO2PercentOfVolume, boolean newRoomIsSmoke, boolean newRoomIsAlarm) {
+//    }
 
     public int getIdRoom() {
         return idRoom;
@@ -198,19 +205,20 @@ public class Room {
         this.lights = lights;
     }
 
-    public int getPersons() {
+    public int getPersonsCount() {
         return persons;
     }
 
-    public void setPersons(int persons) {
+    public void setPersonsCount(int persons) {
         this.persons = persons;
     }
 
-    public int getAnimals() {
+
+    public int getAnimalsCount() {
         return animals;
     }
 
-    public void setAnimals(int animals) {
+    public void setAnimalsCount(int animals) {
         this.animals = animals;
     }
 
@@ -223,7 +231,7 @@ public class Room {
     }
 
     public double getInternalTemperatureC() {
-        return internalTemperatureC;
+        return internalTemperatureC; //TODO
     }
 
     public void setInternalTemperatureC(double internalTemperatureC) {
@@ -270,22 +278,6 @@ public class Room {
         this.CO2PercentOfVolume = CO2PercentOfVolume;
     }
 
-    public double getMinRoomTemperatureC() {
-        return minRoomTemperatureC;
-    }
-
-    public void setMinRoomTemperatureC(double minRoomTemperatureC) {
-        this.minRoomTemperatureC = minRoomTemperatureC;
-    }
-
-    public double getMaxRoomTemperatureC() {
-        return maxRoomTemperatureC;
-    }
-
-    public void setMaxRoomTemperatureC(double maxRoomTemperatureC) {
-        this.maxRoomTemperatureC = maxRoomTemperatureC;
-    }
-
     public boolean isSmoke() {
         return isSmoke;
     }
@@ -300,5 +292,29 @@ public class Room {
 
     public void setAlarm(boolean alarm) {
         isAlarm = alarm;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "idRoom=" + idRoom +
+                ", nameRoom='" + nameRoom + '\'' +
+                ", volumeRoomM3=" + volumeRoomM3 +
+                ", windows=" + windows +
+                ", heaters=" + heaters +
+                ", coolers=" + coolers +
+                ", lights=" + lights +
+                ", persons=" + persons +
+                ", animals=" + animals +
+                ", airConditioner=" + airConditioner +
+                ", internalTemperatureC=" + internalTemperatureC +
+                ", outsideTemperatureC=" + outsideTemperatureC +
+                ", lightLumen=" + lightLumen +
+                ", electricityKwtPerHour=" + electricityKwtPerHour +
+                ", oxygenPercentOfVolume=" + oxygenPercentOfVolume +
+                ", CO2PercentOfVolume=" + CO2PercentOfVolume +
+                ", isSmoke=" + isSmoke +
+                ", isAlarm=" + isAlarm +
+                '}';
     }
 }
