@@ -31,7 +31,7 @@ public class AvgSensorService {
 
     @StreamListener(Sink.INPUT)
     public void getRoomState(String jsonSensor) throws IOException {
-
+        System.out.println(jsonSensor);
         if (System.currentTimeMillis() - timestamp > avgPeriod &&
                 !roomStates.isEmpty()) {
             avgProcessing();
