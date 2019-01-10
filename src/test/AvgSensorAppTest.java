@@ -1,4 +1,4 @@
-package telran.m2m;
+package test;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
