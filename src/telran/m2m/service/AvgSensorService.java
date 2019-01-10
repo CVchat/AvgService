@@ -13,21 +13,24 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.stereotype.Service;
 import telran.m2m.Repo.RoomMongoRepository;
 import telran.m2m.dto.*;
 
 @EnableBinding(Sink.class)
+@Service
 public class AvgSensorService {
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     RoomMongoRepository repository;
     ObjectMapper mapper = new ObjectMapper();
     long timestamp = System.currentTimeMillis();
-    @Value("${avg_period:20000}")
+    @Value("${avg_period:5000}")
     long avgPeriod;
-    HashMap<Integer, List<RoomData>> roomStates = new HashMap<>();
+    public HashMap<Integer, List<RoomData>> roomStates = new HashMap<>();
 
     @StreamListener(Sink.INPUT)
-    void getRoomState(String jsonSensor) throws JsonParseException, JsonMappingException, IOException {
+    public void getRoomState(String jsonSensor) throws IOException {
 
         if (System.currentTimeMillis() - timestamp > avgPeriod &&
                 !roomStates.isEmpty()) {
@@ -74,7 +77,7 @@ public class AvgSensorService {
         double avgLightLumen = v.stream().mapToDouble(x->x.getRoom().getLightLumen()).average().getAsDouble();
         double avgOxygenPercentOfVolume = v.stream().mapToDouble(x->x.getRoom().getOxygenPercentOfVolume()).average().getAsDouble();
         RoomData r = v.get(0);
-        r.getRoom().setCO2PercentOfVolume(avgOxygenPercentOfVolume);
+        r.getRoom().setCO2PercentOfVolume(avgCO2Percent);
         r.getRoom().setInternalTemperatureC(avgInternalTemp);
         r.getRoom().setOutsideTemperatureC(avgExternalTemp);
         r.getRoom().setLightLumen(avgLightLumen);

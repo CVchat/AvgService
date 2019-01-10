@@ -7,5 +7,5 @@ import telran.m2m.dto.RoomData;
 
 import java.io.Serializable;
 @Repository
-public interface RoomMongoRepository extends MongoRepository<RoomData, Serializable>{
+public interface RoomMongoRepository extends MongoRepository<RoomData, Integer>{
 }

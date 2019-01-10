@@ -2,8 +2,10 @@ package telran.m2m.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Data Transfer Object for the Room in the monitoring and control system for buildings
@@ -142,6 +144,10 @@ public class Room {
         this.CO2PercentOfVolume = CO2PercentOfVolume;
         this.isSmoke = isSmoke;
         this.isAlarm = isAlarm;
+    }
+
+    public Room() {
+
     }
 
 //    public Room(int newRoomId, String newRoomName, double newVolumeRoomM3,
@@ -316,5 +322,35 @@ public class Room {
                 ", isSmoke=" + isSmoke +
                 ", isAlarm=" + isAlarm +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Room)) return false;
+        Room room = (Room) o;
+        return idRoom == room.idRoom &&
+                Double.compare(room.volumeRoomM3, volumeRoomM3) == 0 &&
+                persons == room.persons &&
+                animals == room.animals &&
+                Double.compare(room.internalTemperatureC, internalTemperatureC) == 0 &&
+                Double.compare(room.outsideTemperatureC, outsideTemperatureC) == 0 &&
+                Double.compare(room.lightLumen, lightLumen) == 0 &&
+                Double.compare(room.electricityKwtPerHour, electricityKwtPerHour) == 0 &&
+                Double.compare(room.oxygenPercentOfVolume, oxygenPercentOfVolume) == 0 &&
+                Double.compare(room.CO2PercentOfVolume, CO2PercentOfVolume) == 0 &&
+                isSmoke == room.isSmoke &&
+                isAlarm == room.isAlarm &&
+                Objects.equals(nameRoom, room.nameRoom) &&
+                Objects.equals(windows, room.windows) &&
+                Objects.equals(heaters, room.heaters) &&
+                Objects.equals(coolers, room.coolers) &&
+                Objects.equals(lights, room.lights) &&
+                Objects.equals(airConditioner, room.airConditioner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idRoom, nameRoom, volumeRoomM3, windows, heaters, coolers, lights, persons, animals, airConditioner, internalTemperatureC, outsideTemperatureC, lightLumen, electricityKwtPerHour, oxygenPercentOfVolume, CO2PercentOfVolume, isSmoke, isAlarm);
     }
 }

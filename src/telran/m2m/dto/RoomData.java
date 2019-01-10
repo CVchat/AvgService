@@ -2,6 +2,8 @@ package telran.m2m.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Data Transfer Object for the Room Data in the monitoring and control system for buildings
@@ -9,11 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Andrey Lavrinenko
  */
+@Document("RoomData")
 public class RoomData {
 
     /**
      * Identification number of room data object
      */
+    @Id
     public int id;
 
     /**

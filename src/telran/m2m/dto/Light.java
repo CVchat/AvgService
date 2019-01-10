@@ -1,5 +1,7 @@
 package telran.m2m.dto;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * Data Transfer Object for the Lite in the monitoring and control system for buildings
  * made for generation of imitation model to test the functionality of microservices project
